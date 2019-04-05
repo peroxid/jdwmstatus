@@ -46,8 +46,8 @@ public class Main {
                 (this.batteries.get(0).getChargePercentage().orElse(0) + this.batteries.get(1).getChargePercentage().orElse(0)),
                 Battery.getChargingDischargingSymbol(this.batteries.get(0).isCharging() || this.batteries.get(1).isCharging()),
                 Battery.hoursAndMinutesUntilEmptyOrFull(
-                        this.batteries.get(0).minutesUntilEmptyOrFull() +
-                                this.batteries.get(1).minutesUntilEmptyOrFull()
+                        this.batteries.get(0).minutesUntilEmptyOrFull(Main.UPDATE_INTERVAL_IN_MILLISECONDS) +
+                                this.batteries.get(1).minutesUntilEmptyOrFull(Main.UPDATE_INTERVAL_IN_MILLISECONDS)
                 ),
                 this.getTimeAndDate()
         );

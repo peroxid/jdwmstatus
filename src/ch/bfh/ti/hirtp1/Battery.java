@@ -44,17 +44,19 @@ public class Battery {
     }
 
     public int minutesUntilEmptyOrFull(final int intervalInMilliseconds) {
+        // todo port to civilised language from from https://sourceforge.net/p/acpiclient/code/ci/master/tree/acpi.c#l322
+        // the following is wrong
         final Optional<Integer> energyNow = this.getEnergyNow();
 
         if(energyNow.isPresent()) {
             final int remainingEnergy = this.energyFull - energyNow.get();
-            final int difference = (energyNow.get() - this.energyNowPrevious) / (intervalInMilliseconds * 1000 * 60) ;
+            final int difference = energyNow.get() - this.energyNowPrevious;
             this.energyNowPrevious = energyNow.get();
             if(difference == 0) {
                 return 0;
             }
 
-            return Math.abs(new Double((((double) remainingEnergy / difference))).intValue());
+            return (int) (Math.abs(((double) remainingEnergy / difference)) / (intervalInMilliseconds * 1000 * 60));
         }
 
         return 0;
